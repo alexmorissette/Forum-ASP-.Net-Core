@@ -1,0 +1,53 @@
+﻿@model ForumW24_V2.Models.Sujet
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Modifier</h1>
+
+<h4>Sujet</h4>
+<hr />
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SujId" />
+            <input type="hidden" name="FkCatId" id="FkCatId" asp-for="FkCatId" value="@ViewData["FkCatId"]" />
+                <input type="hidden" asp-for="FkUser" class="form-control" />
+            <div class="form-group">
+                <label asp-for="SujTitre" class="control-label">Titre du sujet</label>
+                <input asp-for="SujTitre" class="form-control" />
+                <span asp-validation-for="SujTitre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label asp-for="SujTexte" class="control-label">Texte du sujet</label>
+                    <textarea asp-for="SujTexte" class="form-control"></textarea>
+                    <span asp-validation-for="SujTexte" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="SujDate" class="control-label">Date de création</label>
+                    <input type="text" asp-for="SujDate" class="form-control" readonly />
+                    <span asp-validation-for="SujDate" class="text-danger"></span>
+                </div>
+            </div>
+                        <input type="hidden" class="form-check-input" checked asp-for="SujActif" />
+                <div class="form-group">
+                    <input type="submit" value="Enregistrer" class="btn btn-primary m-3" />
+                </div>
+            </div>
+        </div>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-id="@Model.FkCatId">Retour à la liste</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

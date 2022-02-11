@@ -1,0 +1,48 @@
+﻿@model ForumW24_V2.Models.Message
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FkUser)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FkUser)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MesTexte)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MesTexte)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MesDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MesDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MesActif)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MesActif)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FkSuj)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FkSuj.FkUser)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MesId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

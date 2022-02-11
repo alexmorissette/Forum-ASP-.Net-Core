@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ForumW24_V2.Models.catSujetsTop3>
+
+@{
+
+    ViewData["Title"] = "SlapThatBass";
+}
+
+<h1>Discussions</h1>
+
+<div class="row justify-content-evenly">
+    @foreach (var item in Model)
+    {
+        if(item.CatActif == true)
+                {
+                <div class="col-4 my-3">
+                    <div class="cat-card col-lg-4 mt-3" style="width: 18rem;">
+                        <div class="min-max-height-img">
+                            <img src="@item.CatImg" class="card-img-top" alt="image de la catégorie">
+                        </div>
+                        <div class="card-body min-max-height">
+                            <h3 class="card-title">@item.CatNom</h3>
+                            <h6 class="card-subtitle">(@item.SujetsCount) sujets</h6>
+                            <p class="card-text">@Html.Raw(item.CatDesc)</p>
+                        </div>
+                        <div class="card-body">
+                                <a asp-controller="Sujets" asp-action="Index"  asp-route-id="@item.CatId" class="btn btn-primary card-link">Voir les sujets</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                       <h2>Sujets</h2>
+                       <div class="list-group">
+                           <!--Liste qui présente chaque sujet-->
+                           @foreach (var item2 in item.SujetsTop3)
+                           {
+                                <a class="m-3 list-group-item-action" aria-current="true" asp-controller="Messages" asp-action="Index" asp-route-id="@item2.SujId">
+                                   <div class="row shadow border-5 my-3" style="border-radius: 16px;">
+                                        <div class="d-flex w-100 justify-content-between shadow p-4 active ">
+                                            <div class="col-6">
+                                                <h3 class="m-1">@item2.SujTitre</h3>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="m-1">Publié le @item2.SujDate.ToShortDateString() à @item2.SujDate.ToShortTimeString()</p>
+                                            </div>
+                                        </div>
+                                   </div>
+                               </a>
+                           }
+                       </div>
+                </div>
+                }
+        }
+</div>
+
+

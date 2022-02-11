@@ -1,0 +1,88 @@
+﻿@model PaginatedList<ForumW24_V2.Models.MessageWithHead>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<div class="container">
+    <div class="shadow border-5 my-3 p-3">
+        <div class="d-flex w-100 justify-content-between">
+            <h4>Messages du sujet : @ViewData["TitreSujet"]</h4>
+        </div>
+        <p class="mb-1 float-right">@ViewData["MessagesCnt"] message(s)</p>
+        <a asp-controller="Sujets" asp-action="Index" asp-route-id="@ViewData["idCatSujets"]">Retour aux sujets de la discussion (@ViewData["CatNom"])</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (User.Identity.IsAuthenticated)
+        {
+    <div>
+        <a class="btn btn-secondary my-3" asp-controller="Messages" asp-action="Create" asp-route-id="@ViewData["FkSujId"]">Ajouter un nouveau message</a>
+    </div>
+      }
+
+    @*PAGING*@
+    <div>
+        <h5>Messages par page : </h5>
+        <a class="btn btn-outline-primary" asp-action="Index" asp-route-itemsParPage="5">5</a>
+        <a class="btn btn-outline-primary" asp-action="Index" asp-route-itemsParPage="10">10</a>
+        <a class="btn btn-outline-primary" asp-action="Index" asp-route-itemsParPage="15">15</a>
+        <a class="btn btn-outline-primary" asp-action="Index" asp-route-itemsParPage="20">20</a>
+    </div>
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            if (item.MesActif && item.FkSuj.SujActif)
+            {
+                <div class="shadow border-5 my-3">
+                    <div class="d-flex w-100 justify-content-between list-group-item active p-3">
+                        <p class="mb-1">Auteur : @Html.DisplayFor(modelItem => item.UserName)</p>
+                        <small class="mb-1">Publication: @item.MesDate.ToShortDateString() | @item.MesDate.ToShortTimeString()</small>
+                    </div>
+                    <div class="px-5 py-3">
+                        <p class="mb-1">Message:</p>
+                        <p class="mb-1">@Html.Raw(item.MesTexte)</p>
+                    </div>
+                    @if (User.Identity.IsAuthenticated && ViewData["UserId"].ToString() == item.FkUser)
+                    {
+                        <div class="m-3">
+                            <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.MesId">Éditer</a>
+                            <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.MesId">Enlever</a>
+                        </div>
+                    }
+                </div>
+
+            }
+        }
+    </div>
+
+</div>
+
+@*PAGING VIEW CODE*@
+
+@{
+    var precInactif = !Model.HasPreviousPage ? "disabled" : "";
+    var ProchInactif = !Model.HasNextPage ? "disabled" : "";
+}
+@*Navigation*@
+
+@*Première page*@
+<a asp-action="Index" asp-route-numPage="1" asp-route-itemsParPage="@ViewData["itemsParPage"]"
+   class="btn btn-outline-primary @precInactif">Première</a>
+
+@*Suivante*@
+<a asp-action="Index" asp-route-numPage="@(Model.PageIndex-1)" asp-route-itemsParPage="@ViewData["itemsParPage"]"
+   class="btn btn-outline-primary @precInactif">Précédante</a>
+
+@*Page actuelle*@
+<a class="btn btn-outline-primary disabled">Page actuelle : @Model.PageIndex / @Model.TotalPages</a>
+
+@*Prochaine*@
+<a asp-action="Index" asp-route-numPage="@(Model.PageIndex+1)" asp-route-itemsParPage="@ViewData["itemsParPage"]"
+   class="btn btn-outline-primary @ProchInactif">Suivante</a>
+
+@*Dernière page*@
+<a asp-action="Index" asp-route-numPage="@Model.TotalPages" asp-route-itemsParPage="@ViewData["itemsParPage"]"
+   class="btn btn-outline-primary @ProchInactif">Dernière</a>

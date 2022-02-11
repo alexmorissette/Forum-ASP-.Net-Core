@@ -1,0 +1,44 @@
+﻿@model ForumW24_V2.Models.Message
+@{
+    ViewData["Title"] = "Delete";
+    ViewData["IdSujet"] = Model.FkSujId;
+}
+
+<h1>Retirer</h1>
+
+<h3>Voulez-vous vraiment retirer ce message?</h3>
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+           Auteur
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FkUser)
+        </dd>
+        <dt class = "col-sm-2">
+            Texte
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.MesTexte)
+        </dd>
+        <dt class = "col-sm-2">
+            Date de création
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MesDate)
+        <dt class = "col-sm-2">
+            Sujet du message
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FkSuj.SujTitre)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MesId" />
+        <input type="submit" value="Retirer" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-route-id="@ViewData["IdSujet"]">Retour à la liste</a>
+    </form>
+</div>

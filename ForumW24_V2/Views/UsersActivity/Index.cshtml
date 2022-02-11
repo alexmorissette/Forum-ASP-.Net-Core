@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ForumW24_V2.Models.UserActivity>
+
+@{
+    ViewData["Title"] = "UsersActivityAdmin";
+}
+
+<h1 class="mb-5">Activité des usagers</h1>
+
+<table  class="text-center w-100">
+    <thead>
+        <tr>
+            <th>Identifiant</th>
+            <th>Nombre de sujets</th>
+            <th>Nombre de messages</th>
+            <th>Dernière activité</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            <td>@Html.DisplayFor(modelItem => item.SujetsCnt)</td>
+            <td>@Html.DisplayFor(modelItem => item.MessagesCnt)</td>
+            <td>@Html.DisplayFor(modelItem => item.LastActivity)</td>
+        </tr>
+        }
+    </tbody>
+</table>
+

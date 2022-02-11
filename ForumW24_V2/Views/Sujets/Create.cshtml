@@ -1,0 +1,54 @@
+﻿@model ForumW24_V2.Models.Sujet
+
+@{
+    ViewData["Title"] = "Create";
+    
+}
+
+<h1>Ajout</h1>
+
+<h4>Sujet dans @ViewData["CatNom"]</h4>
+<hr />
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @*INPUT CACHÉ*@
+                <input type="hidden" asp-for="FkCatId" value="@ViewData["FkCatId"]" />
+                <input type="hidden" asp-for="FkCat" value="@ViewData["FkCat"]" />
+                <input type="hidden" asp-for="FkUserNavigation" value="@ViewData["FkUserNavigation"]"/>
+                <label asp-for="SujTitre" class="control-label">Titre du sujet</label>
+                <input asp-for="SujTitre" class="form-control" />
+                <span asp-validation-for="SujTitre" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-evenly">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label asp-for="SujTexte" class="control-label">Texte</label>
+                <textarea asp-for="SujTexte" class="form-control"></textarea>
+                <span asp-validation-for="SujTexte" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="SujDate" class="control-label">Date</label>
+                <input type="text" asp-for="SujDate" class="form-control" readonly value="@ViewData["SujDate"]" />
+                <span asp-validation-for="SujDate" class="text-danger"></span>
+            </div>
+        </div>
+     </div>
+        <div class="form-group">
+            <input type="submit" value="Ajout" class="btn btn-primary m-3" />
+        </div>
+</form>
+
+<div>
+    <a asp-action="Index" asp-route-id="@ViewData["FkCatId"]">Retour à la liste</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

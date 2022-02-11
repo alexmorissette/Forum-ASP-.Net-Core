@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ForumW24_V2.Models.SujetCat>
+<!--Page des sujets-->
+
+<h1>@ViewData["CatNom"]</h1>
+
+
+<!--Conteneur des infos de la page qui à été choisie-->
+
+<div class="container ">
+    <div class="shadow border-5 my-3 p-3">
+        <a asp-controller="Home" asp-action="Index">Retour aux discussions</a>
+    </div>
+</div>
+
+<!--Conteneur de la liste des sujets-->
+
+<div class="container">
+    @if (User.Identity.IsAuthenticated && @ViewData["FkCatId"] != null)
+    {
+        <div>
+            <a class="btn btn-secondary my-3" asp-action="Create" asp-route-id="@ViewData["FkCatId"]">Ajouter un nouveau sujet</a>
+        </div>
+    }
+
+    <div class="list-group">
+        <!--Liste qui présente chaque sujet-->
+        @foreach (var item in Model)
+        {
+            if (item.SujActif == true)
+            {
+                <div class="shadow border-5 my-3">
+                    <a class="list-group-item list-group-item-action" aria-current="true" asp-controller="Messages" asp-action="Index" asp-route-id="@item.SujId">
+                        <h2 class="mb-1">@item.SujTitre</h2>
+                        <div class="d-flex w-100 justify-content-between shadow p-2">
+                            <h5>Auteur: @item.FkUserNavigation.UserName</h5>
+                            <h6 class="mb-1">Discussion: @item.FkCat.CatNom</h6>
+                            <small>Publication: @item.SujDate.ToShortDateString() | @item.SujDate.ToShortTimeString()</small>
+                        </div>
+                        <div class="list-group-item active">
+                            <p class="mb-1 float-left p-3">@Html.Raw(item.SujTexte)</p>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="mb-1 p-3">(@item.MessCnt) messages</small>
+                            <small class="mb-1 p-3">@Html.DisplayFor(modelItem => item.SujVues) vues</small>
+                            <small class="mb-1 p-3">Auteur du dernier message: @Html.DisplayFor(modelItem=>item.LastMessage.FkUserNavigation.UserName)</small>
+                            <small class="mb-1 p-3">Date du dernier message: @Html.DisplayFor(modelItem=>item.LastMessage.MesDate)</small>
+                        </div>
+                    </a>
+                    <div class="m-3">
+                        @if (User.Identity.IsAuthenticated && User.Identity.Name == item.FkUserNavigation.UserName)
+                        {
+                              <a class="btn btn-secondary" asp-area="" asp-action="Edit" asp-route-id="@item.SujId">Éditer</a>
+                               <a class="btn btn-secondary" asp-controller="Messages" asp-action="Index" asp-route-id="@item.SujId">Messages</a>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.SujId">Enlever</a>
+                        }
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+</div>
+

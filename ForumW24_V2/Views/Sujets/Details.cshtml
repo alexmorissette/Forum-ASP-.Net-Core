@@ -1,0 +1,60 @@
+﻿@model ForumW24_V2.Models.Sujet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Sujet</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FkUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FkUser)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SujTitre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SujTitre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SujTexte)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SujTexte)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SujDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SujDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SujVues)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SujVues)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SujActif)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SujActif)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FkCat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FkCat.CatDesc)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SujId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

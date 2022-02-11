@@ -1,0 +1,7 @@
+ADMIN
+admin - Pa$$w0rd
+
+USERS
+alex - Pa$$w0rd
+jean - Pa$$w0rd
+paul - Pa$$w0rd

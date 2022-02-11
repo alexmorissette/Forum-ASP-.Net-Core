@@ -1,0 +1,42 @@
+﻿@model ForumW24_V2.Models.Message
+
+@{
+    ViewData["Title"] = "Create";
+    
+}
+
+<h1>Ajout</h1>
+
+<h4>Message dans le sujet : @ViewData["SujTitre"]</h4>
+<hr />
+<form asp-action="Create">
+    <div class="row">
+        <div class="col-md-8">
+            <input type="hidden" asp-for="FkSujId" value="@ViewData["FkSujId"]" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MesTexte" class="control-label">Texte</label>
+                <textarea asp-for="MesTexte" class="form-control"></textarea>
+                <span asp-validation-for="MesTexte" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="MesDate" class="control-label">Date</label>
+                <input type="text" asp-for="MesDate" class="form-control" readonly value="@ViewData["MesDate"]" />
+                <span asp-validation-for="MesDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Ajout" class="btn btn-primary m-3" />
+    </div>
+</form>
+
+<div>
+    <a  asp-action="Index" asp-route-id="@ViewData["FkSujId"]" >Retour à la liste</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
